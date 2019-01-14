@@ -7,18 +7,26 @@ let Student = require('../model/register')
 router.get('/', function(req, res, next) {
   res.render('index');
 });
+
+// API for register page
 router.get('/register', (req, res, next)=>{
   res.render('register')
 })
+
+// API for browse page
 router.get('/browse', (req, res, next)=>{
-  Student.find().exec().then(result=>{
-    res.status(200).render('/browse');
+  Student.find().then(result=>{
+   res.status(200).render('browse', {
+     student: result
+   })
   }).catch(err=>{
-    res.status(500).redirect('/error', {
-      error: err
+    res.status(500).render('error',{
+      error:err
     })
   })
 })
+
+// API for register POST request
 router.post('/register', (req, res, next)=>{
   let student = new Student({
     name: req.body.name,

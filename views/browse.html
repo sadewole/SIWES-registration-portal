@@ -1,0 +1,15 @@
+<div class="container">
+    <h1>Names of all registered student</h1>
+    <p>Click on the name to view the details about the registered student</p>
+    <ul class="list-group">
+        {{#each student}}
+        <li class="list-group-item">
+            <a href="">{{this.name}}</a>
+            <div>
+                <span class="mr-4">{{this.matric}}</span> |
+                <span class="ml-4">{{this.school}}</span>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+</div>
