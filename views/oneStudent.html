@@ -1,15 +1,12 @@
 <div class="container">
-        {{#each student}}
-        <h1>Name: {{this.name}}</h1>
-        {{/each}}
-<!-- 
-    
-name: req.body.name,
-matric: req.body.matric,
-school: req.body.school,
-email: req.body.email,
-department: req.body.department,
-supervisor: req.body.supervisor,
-startDate: req.body.startDate,
-enddate: req.body.enddate -->
+        <h1>{{student.name}}</h1>
+        <h3>Matric: <small>{{student.matric}}</small></h3>
+        <h3>Email: <small>{{student.email}}</small></h3>
+        <h3>School: <small>{{student.school}}</small></h3>
+        <h3>Department: <small>{{student.department}}</small></h3>
+        <h3>Supervisor: <small>{{student.supervisor}}</small></h3>
+        <h3>Start Date: <small>{{student.startDate}}</small></h3>
+        <h3>End Date: <small>{{student.endDate}}</small></h3>
+
+        <div class="mt"><a href="/browse/edit/{{student._id}}">Edit</a> | <a href="">Delete</a></div>
 </div>

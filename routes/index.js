@@ -30,20 +30,15 @@ router.get('/browse', (req, res, next)=>{
 router.get('/browse/:id', (req, res, next)=>{
   let id = req.params.id
 
-  Student.findById(id, (err, data)=>{
-    res.render('oneStudent', {
-      student: data
+  Student.findById(id).exec().then(result=>{
+    res.status(201).render('oneStudent', {
+      student: result
+    })
+  }).catch(err=>{
+    res.status(500).render('error',{
+      error:err
     })
   })
-  // Student.findById(id).exec().then(result=>{
-  //   res.status(201).render('viewStudent', {
-  //     student: result
-  //   })
-  // }).catch(err=>{
-  //   res.status(500).render('error',{
-  //     error:err
-  //   })
-  // })
 })
 
 // API for register POST request
@@ -56,7 +51,7 @@ router.post('/register', (req, res, next)=>{
     department: req.body.department,
     supervisor: req.body.supervisor,
     startDate: req.body.startDate,
-    enddate: req.body.enddate
+    endDate: req.body.endDate
   });
 
   student.save().then(result=>{
@@ -68,6 +63,25 @@ router.post('/register', (req, res, next)=>{
   })
 
 })
+
+// API for Edit student details
+router.get('/browse/edit/:id', (req, res, next)=>{
+  let id = req.params.id;
+  const updateOps = {};
+    for(let ops of req.body){
+        updateOps[ops.propName] = ops.value;
+    }
+  
+  Student.findByIdAndUpdate(id, { $set : updateOps }).then(result=>{
+    res.status(201).redirect('/');
+  }).catch(err=>{
+    res.status(500).redirect('/error', {
+      error: err
+    })
+  })
+ 
+})
+
 router.delete('/', (req, res, next)=>{
   
 })

@@ -27,11 +27,11 @@ let studentSchema = new Schema({
         required: true
     },
     startDate:{
-        type: Date,
+        type: String,
         required: true
     },
-    enddate:{
-        type: Date,
+    endDate:{
+        type: String,
         required: true
     }
 });

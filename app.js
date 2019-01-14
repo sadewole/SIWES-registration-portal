@@ -28,7 +28,7 @@ var indexRouter = require('./routes/index');
 var app = express();
 
 // view engine setup
-app.engine('.html', hbs({extname: ".html", defaultLayout:"layout", layoutsDir: __dirname+'/views/layouts'}))
+app.engine('.html', hbs({extname: '.html', defaultLayout:'layout', layoutsDir: __dirname + '/views/layouts'}))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', '.html');
 
