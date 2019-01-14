@@ -17,13 +17,33 @@ router.get('/register', (req, res, next)=>{
 router.get('/browse', (req, res, next)=>{
   Student.find().then(result=>{
    res.status(200).render('browse', {
-     student: result
+     students: result
    })
   }).catch(err=>{
     res.status(500).render('error',{
       error:err
     })
   })
+})
+
+// API for getting each student
+router.get('/browse/:id', (req, res, next)=>{
+  let id = req.params.id
+
+  Student.findById(id, (err, data)=>{
+    res.render('oneStudent', {
+      student: data
+    })
+  })
+  // Student.findById(id).exec().then(result=>{
+  //   res.status(201).render('viewStudent', {
+  //     student: result
+  //   })
+  // }).catch(err=>{
+  //   res.status(500).render('error',{
+  //     error:err
+  //   })
+  // })
 })
 
 // API for register POST request
