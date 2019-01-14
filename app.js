@@ -4,6 +4,23 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require("express-handlebars")
+let mongoose = require('mongoose')
+
+// Connect to database
+mongoose.connect('mongodb://localhost:27017/siwesReg', {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+})
+
+let database = mongoose.connection;
+database.once('open', ()=>{
+  console.log('connected to the database')
+})
+database.on('error', (err)=>{
+  console.log(err)
+})
+
 
 // import route API
 var indexRouter = require('./routes/index');
