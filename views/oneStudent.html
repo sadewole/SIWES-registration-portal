@@ -1,12 +1,18 @@
-<div class="container">
-        <h1>{{student.name}}</h1>
-        <h3>Matric: <small>{{student.matric}}</small></h3>
-        <h3>Email: <small>{{student.email}}</small></h3>
-        <h3>School: <small>{{student.school}}</small></h3>
-        <h3>Department: <small>{{student.department}}</small></h3>
-        <h3>Supervisor: <small>{{student.supervisor}}</small></h3>
-        <h3>Start Date: <small>{{student.startDate}}</small></h3>
-        <h3>End Date: <small>{{student.endDate}}</small></h3>
-
-        <div class="mt"><a href="/browse/edit/{{student._id}}">Edit</a> | <a href="">Delete</a></div>
+<div class="container mt-3">
+        <div class="card card-default">
+                <div class="card-header">
+                   <h1 class="card-title">{{student.name}}</h1>
+                </div>
+                <div class="card-body">
+                        <h3>Matric: <small>{{student.matric}}</small></h3>
+                        <h3>Email: <small>{{student.email}}</small></h3>
+                        <h3>School: <small>{{student.school}}</small></h3>
+                        <h3>Department: <small>{{student.department}}</small></h3>
+                        <h3>Supervisor: <small>{{student.supervisor}}</small></h3>
+                        <h3>Start Date: <small>{{student.startDate}}</small></h3>
+                        <h3>End Date: <small>{{student.endDate}}</small></h3>
+                </div>
+                
+                <div class="mt"><a href="/browse/edit/{{student._id}}">Edit</a> | <a href=" " id="remove" data-id="{{student._id}}">Delete</a></div>
+        </div>
 </div>

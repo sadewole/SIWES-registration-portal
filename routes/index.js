@@ -81,14 +81,23 @@ router.get('/browse/edit/:id', (req, res, next)=>{
 
 // API for Edit student details
 router.post('/browse/edit/:id', (req, res, next)=>{
-  let id = req.params.id;
-  const updateOps = {};
-    for(let ops of req.body){
-        updateOps[ops.propName] = ops.value;
-    }
+  let id = {_id: req.params.id};
+  const updateOps = {
+    name: req.body.name,
+    matric: req.body.matric,
+    school: req.body.school,
+    email: req.body.email,
+    department: req.body.department,
+    supervisor: req.body.supervisor,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate
+  };
+  // for(let ops of req.body){
+  //       updateOps[ops.propName] = ops.value;
+  // }
   
-  Student.findByIdAndUpdate(id, { $set : updateOps }).then(result=>{
-    res.status(201).redirect('/update');
+  Student.findByIdAndUpdate(id, updateOps).then(result=>{
+    res.status(201).redirect('/browse');
   }).catch(err=>{
     res.status(500).redirect('/error', {
       error: err
@@ -97,7 +106,15 @@ router.post('/browse/edit/:id', (req, res, next)=>{
  
 })
 
-router.delete('/', (req, res, next)=>{
-  
+router.delete('/browse/delete/:id', (req, res, next)=>{
+  let id = {_id: req.params.id};
+
+  Student.remove(id).then(result=>{
+    res.send('success')
+  }).catch(err=>{
+    res.status(500).redirect("/error",{
+      error: err
+    })
+  })
 })
 module.exports = router;
