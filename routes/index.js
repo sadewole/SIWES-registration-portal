@@ -30,4 +30,5 @@ router.get('/browse/edit/:id', studentController.get_view_each_student_get)
 router.post('/browse/edit/:id', studentController.get_update_student_get)
 
 router.delete('/browse/delete/:id', studentController.get_delete_student_get)
+
 module.exports = router;
