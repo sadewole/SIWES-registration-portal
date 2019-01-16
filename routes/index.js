@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
-let Student = require('../model/register')
+let Student = require('../model/register');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -43,24 +43,45 @@ router.get('/browse/:id', (req, res, next)=>{
 
 // API for register POST request
 router.post('/register', (req, res, next)=>{
-  let student = new Student({
-    name: req.body.name,
-    matric: req.body.matric,
-    school: req.body.school,
-    email: req.body.email,
-    department: req.body.department,
-    supervisor: req.body.supervisor,
-    startDate: req.body.startDate,
-    endDate: req.body.endDate
-  });
+  req.check('name', 'Name is required').notEmpty()
+  req.check('email', 'Email is required').notEmpty()
+  req.check('email', 'Invalid email address').isEmail()
+  req.check('matric', 'Matric number is required').notEmpty()
+  req.check('school', 'School name is required').notEmpty()
+  req.check('department', 'Department is required').notEmpty()
+  req.check('supervisor', 'Supervisor name is required').notEmpty()
+  req.check('startDate', 'Start date is required').notEmpty()
+  req.check('endDate', 'End date is required').notEmpty()
+  
+  let errors = req.validationErrors()
 
-  student.save().then(result=>{
-    res.status(201).redirect('/register');
-  }).catch(err=>{
-    res.status(500).redirect('/error', {
-      error: err
+  if (errors){
+    res.render('register', {
+      errors: errors
     })
-  })
+  }else{
+    let student = new Student({
+      name: req.body.name,
+      matric: req.body.matric,
+      school: req.body.school,
+      email: req.body.email,
+      department: req.body.department,
+      supervisor: req.body.supervisor,
+      startDate: req.body.startDate,
+      endDate: req.body.endDate
+    });
+  
+    student.save().then(result=>{
+      res.status(201).render('register', {
+        success: "Student details added"
+      });
+    }).catch(err=>{
+      res.status(500).render('error', {
+        error: err
+      })
+    })
+  }
+  
 
 })
 
@@ -92,10 +113,7 @@ router.post('/browse/edit/:id', (req, res, next)=>{
     startDate: req.body.startDate,
     endDate: req.body.endDate
   };
-  // for(let ops of req.body){
-  //       updateOps[ops.propName] = ops.value;
-  // }
-  
+
   Student.findByIdAndUpdate(id, updateOps).then(result=>{
     res.status(201).redirect('/browse');
   }).catch(err=>{

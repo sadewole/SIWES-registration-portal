@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require("express-handlebars")
 let mongoose = require('mongoose')
+let expressValidation = require('express-validator');
+let expressSession = require("express-session");
 
 // Connect to database
 mongoose.connect('mongodb://localhost:27017/siwesReg', {
@@ -20,7 +22,7 @@ database.once('open', ()=>{
 database.on('error', (err)=>{
   console.log(err)
 })
-
+mongoose.Promise = global.Promise;
 
 // import route API
 var indexRouter = require('./routes/index');
@@ -37,6 +39,29 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// express validator middleware
+app.use(expressValidation({
+  errorFormatter: function(param, msg, value){
+    let namespace = param.split('.'), root = namespace.shift(), formParam = root;
+
+    while(namespace.length){
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg : msg,
+      value : value
+    }
+  }
+}))
+
+// express Session middleware
+app.use(expressSession({
+  resave: true,
+  saveUninitialized: true,
+  secret: "Mask"
+}))
 
 app.use('/', indexRouter);
 

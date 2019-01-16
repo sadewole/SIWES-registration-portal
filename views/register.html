@@ -1,6 +1,18 @@
 <div class="container">
     <h1>Register student credentials</h1>
     <p><small>Ensure the form is correctly filled</small></p>
+         {{#if success}}
+            <p class="alert alert-success">{{success}}</p>
+        {{else}}
+            {{#if errors}}  
+                <ul class="list-group">
+                    {{#each errors}}
+                    <li class="alert alert-danger">{{this.msg}}</li>
+                    {{/each}}
+                </ul>  
+            {{/if}}
+        {{/if}}
+    
     <form action="/register", method="POST">
         <div class="form-group">
             <label for="name">Name: </label>
@@ -12,7 +24,7 @@
         </div>
         <div class="form-group">
             <label for="email">Email: </label>
-            <input type="email" name="email" class="form-control">
+            <input type="text" name="email" class="form-control">
         </div>
         <div class="form-group">
             <label for="matric">Matric Number: </label>

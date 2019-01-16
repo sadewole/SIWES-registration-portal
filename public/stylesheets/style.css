@@ -79,3 +79,6 @@ header nav .top-li .bot-line{
   font-size: 100px !important;
   color: rgb(25, 54, 29);
 }
+ul{
+  list-style: none
+}
